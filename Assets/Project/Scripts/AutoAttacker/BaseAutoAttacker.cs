@@ -22,7 +22,7 @@ namespace Project.Scripts.Common
         
         public ReactiveProperty<float> CoolDown { get;} = new();
         protected float damage { get; set; }
-        protected float reloadTime;
+        private float reloadTime;
 
         protected CompositeDisposable _disposable = new();
         
@@ -49,6 +49,14 @@ namespace Project.Scripts.Common
             reloadTime = _unitConfig.UnitStats[EUnitStat.CoolDown];
             CoolDown.Value = reloadTime;
             
+            CoolDown.Subscribe(v =>
+            {
+                if (v ==0)
+                {
+                    StartAttack();
+                }
+            }).AddTo(_disposable);
+            
             _timeToPlay.Time.Subscribe(v =>
             {
                 if (v <= 0)
@@ -60,7 +68,9 @@ namespace Project.Scripts.Common
         
         public void StartAttack()
         {
-            Debug.Log("attack " + gameObject.name);
+            _cancelToken = new CancellationTokenSource();
+            Reload().Forget();
+            
             if (_targetHealthComponent.CurrentHealth.Value <= 0)
             {
                 StopAttack();
@@ -78,8 +88,6 @@ namespace Project.Scripts.Common
             _audioSource.Play();
     
             _animator.PlayAnim(EAnimationsType.Idle);
-            _cancelToken = new CancellationTokenSource();
-            Reload().Forget();
         }
 
         private async UniTask Reload()
@@ -93,7 +101,6 @@ namespace Project.Scripts.Common
             }
 
             CoolDown.Value = 0;
-            StartAttack();
         }
 
         public void StopAttack()

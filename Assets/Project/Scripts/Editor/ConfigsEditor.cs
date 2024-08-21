@@ -1,8 +1,6 @@
-using Project.Configs.Weapons;
 using Project.Scripts.Configs;
 using Project.Scripts.Configs.Audio;
 using Project.Scripts.Configs.Spawn;
-using Project.Scripts.INFO;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -19,7 +17,6 @@ namespace Project.Scripts.Editor
         private const string SPAWN_CONFIGS_PATH = CONFIG_PATH + "Spawn";
         private const string AUDIO_CONFIGS_PATH = CONFIG_PATH + "Audio";
         private const string WEAPONS_CONFIGS_PATH = CONFIG_PATH + "Weapons";
-        private const string PLAYERINFO_CONFIGS_PATH = CONFIG_PATH + "PlayerInfo";
 
         [MenuItem("Tools/Configs Editor")]
         private static void ShowWindow()
@@ -46,7 +43,6 @@ namespace Project.Scripts.Editor
             menuTree.AddAllAssetsAtPath("Root", ROOT_CONFIGS_PATH, typeof(RootConfig));
             menuTree.AddAllAssetsAtPath("Spawn", SPAWN_CONFIGS_PATH, typeof(EnemiesSpawnConfig));
             menuTree.AddAllAssetsAtPath("Audio", AUDIO_CONFIGS_PATH, typeof(AudioConfig));
-            menuTree.AddAllAssetsAtPath("PlayerInfo", PLAYERINFO_CONFIGS_PATH, typeof(PlayerInfoData));
             return menuTree;
         }
     }
