@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Project.Scripts.UI
@@ -14,28 +15,19 @@ namespace Project.Scripts.UI
         Failed
     }
     
-    public class UIManager : MonoBehaviour
+    public class UIManager : SerializedMonoBehaviour
     {
-        [SerializeField] private Screen _startUIScreen;
-
-        private Dictionary<EScreenType, Screen> _screens = new();
-
-        private void Awake()
-        {
-            List<Screen> screens = GetComponentsInChildren<Screen>().ToList(); //TODO костыль!
-            foreach (var screen in screens)
-            {
-                _screens.Add(screen.ScreenType, screen);
-            }
-        }
-
+        [SerializeField] private EScreenType _startUIScreen;
+        
+        [SerializeField] private Dictionary<EScreenType, Screen> _screens = new();
+        
         private async void Start()
         {
             await UniTask.Delay(1000);
-            _startUIScreen.gameObject.SetActive(true);
+            SetScreen(_startUIScreen, false);
         }
 
-        public void SetScreen(EScreenType type)
+        public void SetScreen(EScreenType type , bool hideCurrentScreen = true)
         {
             _screens[type].gameObject.SetActive(true);
         }

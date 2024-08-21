@@ -12,6 +12,7 @@ namespace Project.Scripts.Zenject
             Container.BindInterfacesAndSelfTo<UnitFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<UITimeToPlay>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<EnemySpawner>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<UIManager>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Project.Scripts.Spawn
 
         private void Start()
         {
-            _unitFactory.Create(_player, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+            _unitFactory.Create(_player, gameObject.transform.position, Quaternion.identity, gameObject.transform); //TODO  мб сделать ссылку на игрока? не искать его через FindObject?
         }
     }
 }

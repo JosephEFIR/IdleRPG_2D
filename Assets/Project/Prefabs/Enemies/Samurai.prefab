@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3347442685586505296}
   - component: {fileID: 97868180167893480}
   - component: {fileID: 2142718141857854061}
+  - component: {fileID: 4439659624509876826}
   m_Layer: 0
   m_Name: Samurai
   m_TagString: Enemy
@@ -258,6 +259,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5318469733096609262}
+--- !u!61 &4439659624509876826
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318469733096609260}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.12733507, y: 0.20691872}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 12.5, y: 12.5}
+    newSize: {x: 6.25, y: 6.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.6952329, y: 3.36374}
+  m_EdgeRadius: 0
 --- !u!1 &7856702498645226834
 GameObject:
   m_ObjectHideFlags: 0

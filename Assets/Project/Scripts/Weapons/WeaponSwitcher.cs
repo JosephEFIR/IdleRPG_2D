@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Common;
@@ -20,49 +21,47 @@ namespace Project.Scripts.Weapons
         private WeaponHandler _weaponHandler;
         private PlayerAutoAttacker _playerAutoAttacker;
         private CancellationTokenSource _cancelToken;
-
-        public ReactiveProperty<int> SwtichWeaponTime = new ();
         
-        [NonSerialized] public ReactiveProperty<Weapon> CurrentWeapon = new();
+        public readonly ReactiveProperty<int> SwtichWeaponTime = new ();
+        public readonly ReactiveProperty<Weapon> CurrentWeapon = new();
+
+        private Dictionary<EWeaponType, Weapon> _weapons = new();
 
         private void Awake()
         {
             _weaponHandler = GetComponent<WeaponHandler>();
             _playerAutoAttacker = GetComponentInParent<PlayerAutoAttacker>();
-            
-            _meleeWeapon = Instantiate(_playerInfoConfig.MeleeWeapon, _weaponHandler.WeaponPoint);
-            _rangeWeapon = Instantiate(_playerInfoConfig.RangeWeapon, _weaponHandler.WeaponPoint);
-            
-            _rangeWeapon.gameObject.SetActive(false);
-            
-            CurrentWeapon.Value = _meleeWeapon;
+
+            Weapon[] weapons =
+            {
+                 Instantiate(_playerInfoConfig.MeleeWeapon, _weaponHandler.WeaponPoint),
+                 Instantiate(_playerInfoConfig.RangeWeapon, _weaponHandler.WeaponPoint)
+            };
+
+            foreach (var weapon in weapons)
+            {
+                _weapons.Add(weapon.WeaponType, weapon);
+                weapon.gameObject.SetActive(false);
+            }
+
+            CurrentWeapon.Value = _weapons[EWeaponType.Melee];
+            CurrentWeapon.Value.gameObject.SetActive(true);
         }
         
-        public void PickMeleeWeapon()
+        public void SwitchWeapon(EWeaponType weaponType)
         {
+            CurrentWeapon.Value.gameObject.SetActive(false);
+            
             SwtichWeaponTime.Value = _rootConfig.ChangeWeaponTime;
             _cancelToken = new CancellationTokenSource();
-            
-            _rangeWeapon.gameObject.SetActive(false);
-            _meleeWeapon.gameObject.SetActive(true);
-            
-            CurrentWeapon.Value = _meleeWeapon;
-            _playerAutoAttacker.StopAttack();
-            StayToChangeWeapon();
-        }
-        public void PickRangeWeapon()
-        {
-            SwtichWeaponTime.Value = _rootConfig.ChangeWeaponTime;
-            _cancelToken = new CancellationTokenSource();
-            
-            _rangeWeapon.gameObject.SetActive(true);
-            _meleeWeapon.gameObject.SetActive(false);
-            
-            CurrentWeapon.Value = _rangeWeapon;
-            _playerAutoAttacker.StopAttack();
-            StayToChangeWeapon();
-        }
 
+            CurrentWeapon.Value = _weapons[weaponType];
+            CurrentWeapon.Value.gameObject.SetActive(true);
+            
+            _playerAutoAttacker.StopAttack();
+            StayToChangeWeapon();
+        }
+        
         private async void StayToChangeWeapon()
         {
             while (SwtichWeaponTime.Value > 0)

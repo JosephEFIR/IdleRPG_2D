@@ -18,8 +18,9 @@ namespace Project.Scripts.Spawn
         private Dictionary<Units.Enemy, int> _enemySpawnChance = new();
         [NonSerialized]
         public ReactiveProperty<Units.Enemy> CurrentEnemy = new();
-        private List<Units.Enemy> _enemies = new();
-        
+        private List<Units.Enemy> _enemies = new(); //TODO а реактивный лист ?
+        public ReactiveProperty<int> CountEnemies = new();
+
         private void Start()
         {
             foreach (var variable in _enemiesSpawnConfig.Data)
@@ -40,20 +41,29 @@ namespace Project.Scripts.Spawn
             Units.Enemy enemyPrefab = GetEnemyOnChance();
             var enemy = _unitFactory.CreateEnemy(enemyPrefab, gameObject.transform.position, Quaternion.identity, gameObject.transform);
             _enemies.Add(enemy);
+            CountEnemies.Value++;
             enemy.gameObject.SetActive(false);
         }
         
-        public void NextEnemy()
+        private void NextEnemy()
         {
-            Units.Enemy enemy = _enemies[0];
-            CurrentEnemy.Value = enemy;
-
-            enemy.gameObject.SetActive(true);
+            if (_enemies.Count == 0)
+            {
+                CountEnemies.Value = 0;
+            }
+            else
+            {
+                Units.Enemy enemy = _enemies[0];
+                CurrentEnemy.Value = enemy;
+                
+                enemy.gameObject.SetActive(true);
+            }
         }
         
         public void DestroyEnemy(Units.Enemy enemy)
         {
             _enemies.RemoveAt(0);
+            CountEnemies.Value--;
             Destroy(enemy.gameObject);
             NextEnemy();
         }

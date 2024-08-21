@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bde8108a2c1442d9cf94d9076e6abfa, type: 3}
   m_Name: Blaster
   m_EditorClassIdentifier: 
-  _damage: 10
+  _damage: 20

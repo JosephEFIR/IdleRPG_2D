@@ -38,14 +38,7 @@ namespace Project.Scripts.UI
 
         private void WeaponSwitch()
         {
-            if (_weaponType == EWeaponType.Melee)
-            {
-                _weaponSwitcher.PickMeleeWeapon();
-            }
-            else if (_weaponType == EWeaponType.Range)
-            {
-                _weaponSwitcher.PickRangeWeapon();
-            }
+            _weaponSwitcher.SwitchWeapon(_weaponType);
         }
 
         private void OnDestroy()

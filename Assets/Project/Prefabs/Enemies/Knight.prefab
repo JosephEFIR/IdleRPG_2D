@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7671709122220787005}
   - component: {fileID: 8062277016637479640}
   - component: {fileID: 2303906327354819004}
+  - component: {fileID: 6384299298891714913}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Enemy
@@ -258,6 +259,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4848d65501478298a2dd0200c76a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &6384299298891714913
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300864781737313349}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.3409536, y: -0.12785792}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 11.25, y: 11.25}
+    newSize: {x: 6.25, y: 6.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.0671177, y: 3.1523566}
+  m_EdgeRadius: 0
 --- !u!1 &5477803155121123494
 GameObject:
   m_ObjectHideFlags: 0

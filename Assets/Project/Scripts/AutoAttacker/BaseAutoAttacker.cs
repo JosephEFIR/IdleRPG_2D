@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Configs;
 using Project.Scripts.Configs.Audio;
@@ -31,6 +32,8 @@ namespace Project.Scripts.Common
         protected HealthComponent _targetHealthComponent;
 
         private CancellationTokenSource _cancelToken;
+
+        public event Action OnAttackEvent; 
 
         protected virtual void Awake()
         {
@@ -83,6 +86,7 @@ namespace Project.Scripts.Common
 
         private void OnAttack()
         { 
+            OnAttackEvent?.Invoke();
             _targetHealthComponent.GetDamage(damage);
             _audioSource.clip = _audioConfig.BattleAudioClips[EBattleAudio.SwordHit];
             _audioSource.Play();
